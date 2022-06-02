@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel='stylesheet' type='text/css' media='screen' href="{% static 'styles/main.css' %}">
+
+</head>
+<body>
+<title>Image converter</title>
+
+        <div class="container">
+            <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Upload and blurr face</button>
+    </form>
+
+    {% if img %}
+        <h3>Succesfully blurred face</h3>
+        <img src="{{ img.image.url }}" alt="connect" style="max-height:1000px">
+
+        <a href="{{ img.image.url }}" download="GFG">
+            <button type="button">Download</button>
+        </a>
+    {% endif %}
+        </div>
+
+</body>
+</html>
