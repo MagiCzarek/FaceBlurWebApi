@@ -9,8 +9,8 @@
 <body>
 <title>Image converter</title>
 
-        <div class="container">
-            <form method="post" enctype="multipart/form-data">
+<div class="container">
+    <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Upload and blurr face</button>
@@ -19,12 +19,14 @@
     {% if img %}
         <h3>Succesfully blurred face</h3>
         <img src="{{ img.image.url }}" alt="connect" style="max-height:1000px">
+        <form method='get' action=''>
+            <a href="{{ img.image.url }}" download="GFG">
 
-        <a href="{{ img.image.url }}" download="GFG">
-            <button type="button">Download</button>
-        </a>
+                <button name="delete-button" value="{{ img }}">Download</button>
+            </a>
+        </form>
     {% endif %}
-        </div>
+</div>
 
 </body>
 </html>

@@ -1,3 +1,5 @@
+import os
+
 from django.shortcuts import render
 from .forms import *
 
@@ -6,14 +8,22 @@ from .forms import *
 
 def upload_view(request):
     if request.method == 'POST':
-        form = UploadImageForm(request.POST,request.FILES)
+        form = UploadImageForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             img = form.instance
             return render(request, 'blur_app/upload.html', {'form': form, 'img': img})
     else:
         form = UploadImageForm()
-    return render(request, 'blur_app/upload.html', {'form': form})
 
-    context = {}
-    return render(request, 'blur_app/upload.html', context)
+    if request.GET.get('delete-button'):
+        pk = request.GET.get('delete-button')
+        print(pk)
+
+        uploded_file = UploadedFile.objects.get(id=pk)
+        uploded_file.delete()
+        if len(uploded_file.image) > 0:
+            os.remove(uploded_file.image.path)
+        # UploadedFile.objects.filter(id=request.GET.get('delete-button')).delete()
+
+    return render(request, 'blur_app/upload.html', {'form': form})

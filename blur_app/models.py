@@ -33,4 +33,6 @@ class UploadedFile(models.Model):
         self.image.save(str(self.image),ContentFile(result_image),save=False)
 
         super().save(*args,**kwargs)
+
+
         
