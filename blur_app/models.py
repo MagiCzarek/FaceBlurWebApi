@@ -1,3 +1,5 @@
+import os
+
 import numpy as np
 from django.db import models
 from PIL import Image
@@ -33,6 +35,12 @@ class UploadedFile(models.Model):
         self.image.save(str(self.image),ContentFile(result_image),save=False)
 
         super().save(*args,**kwargs)
+
+    def delete_image(self,uploaded_file,pk):
+
+        uploaded_file.delete()
+        if len(uploaded_file.image) > 0:
+            os.remove(uploaded_file.image.path)
 
 
         

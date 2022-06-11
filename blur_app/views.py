@@ -19,11 +19,8 @@ def upload_view(request):
     if request.GET.get('delete-button'):
         pk = request.GET.get('delete-button')
         print(pk)
-
-        uploded_file = UploadedFile.objects.get(id=pk)
-        uploded_file.delete()
-        if len(uploded_file.image) > 0:
-            os.remove(uploded_file.image.path)
-        # UploadedFile.objects.filter(id=request.GET.get('delete-button')).delete()
+        uploaded_file = UploadedFile.objects.get(id=pk)
+        uploaded_file.delete_image(uploaded_file, pk)
+        form = UploadImageForm()
 
     return render(request, 'blur_app/upload.html', {'form': form})
